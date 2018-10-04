@@ -1,7 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server');
 
 const todos = [
-  { task: 'Wash car', completed: false },
+  { task: 'Wash my car', completed: false },
   { task: 'Clean room', completed: true }
 ];
 
