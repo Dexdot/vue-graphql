@@ -24,6 +24,8 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
+  // property ('createdBy') === path
+  // ref ('User') === model
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
