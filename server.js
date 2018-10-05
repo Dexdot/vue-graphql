@@ -1,11 +1,13 @@
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 
+// Read "typeDefs.gql"
 const fs = require('fs');
 const path = require('path');
 
 const filePath = path.join(__dirname, 'typeDefs.gql');
 const typeDefs = fs.readFileSync(filePath, 'utf-8');
+const resolvers = require('./resolvers');
 
 // Variables Env
 require('dotenv').config({ path: 'variables.env' });
@@ -26,6 +28,7 @@ mongoose
 // Create Apollo Server
 const server = new ApolloServer({
   typeDefs,
+  resolvers,
   context: {
     User,
     Post
