@@ -1,0 +1,27 @@
+type User {
+  _id: ID
+  username: String! @unique
+  email: String! @unique
+  password: String!
+  avatar: String
+  joinDate: String
+  favorites: [Post]
+}
+
+type Post {
+  title: String!
+  description: String!
+  imageUrl: String!
+  categories: [String]!
+  createdDate: String
+  createdBy: User!
+  likes: Int
+  messages: [Message]
+}
+
+type Message {
+  _id: ID
+  messageBody: String!
+  messageDate: String
+  messageUser: User!
+}
