@@ -107,13 +107,13 @@ export default {
 
   .fade-enter-active,
   .fade-leave-active
-    transition: opacity 0.25s
+    transition: opacity 0.2s
 
   .fade-enter,
   .fade-leave-active
     opacity: 0
 
   .fade-enter-active
-    transition-delay: 0.25s
+    transition-delay: 0.2s
 </style>
 
