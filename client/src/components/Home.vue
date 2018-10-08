@@ -1,6 +1,6 @@
 <template>
-  <v-container>
+  <div>
     <h1>Home</h1>
     <v-btn color="primary">Button</v-btn>
-  </v-container>
+  </div>
 </template>
