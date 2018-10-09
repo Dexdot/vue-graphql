@@ -1,13 +1,14 @@
 <template>
   <div>
     <h1>Home</h1>
-    <ul>
-      <li v-for="post in getPosts" :key="post._id">
-        {{ post.title }}
-        {{ post.imageUrl }}
-        {{ post.description }}
+    <div v-if="$apollo.loading">Loading...</div>
+    <ul v-else>
+      <li v-for="post in posts" :key="post._id">
+        {{ post.title }}<br>
+        {{ post.description }}<br>
+        <img :src="post.imageUrl" :alt="post.title">
       </li>
-      <v-btn @click="showPosts">Show posts</v-btn>
+      <v-btn>Button</v-btn>
     </ul>
   </div>
 </template>
@@ -18,17 +19,14 @@ import { gql } from 'apollo-boost';
 
 export default {
   name: 'Home',
-  methods: {
-    showPosts() {
-      // eslint-disable-next-line
-      console.log(this.getPosts);
-    }
-  },
+  data: () => ({
+    posts: []
+  }),
   apollo: {
     getPosts: {
       query: gql`
         query {
-          getPosts {
+          getPost {
             _id
             title
             description
@@ -36,9 +34,17 @@ export default {
             categories
             createdDate
             likes
-          }
+            } 
         }
-      `
+      `,
+      result({ data, loading }) {
+        if (!loading) {
+          this.posts = data.getPosts;
+        }
+      },
+      error(err) {
+        console.error(err);
+      }
     }
   }
 }
