@@ -1,15 +1,12 @@
 <template>
-  <div>
-    <h1>Home</h1>
-    <div v-if="$apollo.loading">Loading...</div>
-    <ul v-else>
-      <li v-for="post in posts" :key="post._id">
-        {{ post.title }}<br>
-        {{ post.description }}<br>
-        <img :src="post.imageUrl" :alt="post.title">
-      </li>
-      <v-btn>Button</v-btn>
-    </ul>
+  <div v-if="getPosts">
+    <v-flex xs12 text-xs-center>
+      <v-carousel v-bind="{ 'cycle': true }" interval="3000">
+        <v-carousel-item v-for="post in getPosts" :key="post._id" :src="post.imageUrl">
+          <h1 class="carousel__title"> {{ post.title }} </h1>
+        </v-carousel-item>
+      </v-carousel>
+    </v-flex>
   </div>
 </template>
 
@@ -26,7 +23,7 @@ export default {
     getPosts: {
       query: gql`
         query {
-          getPost {
+          getPosts {
             _id
             title
             description
@@ -49,3 +46,17 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .carousel__title
+    position: absolute
+    background: rgba(0, 0, 0, 0.5)
+    color: #ffffff
+    border-radius: 5px 5px 0 0
+    padding: 0.5em
+    margin: 0 auto
+    bottom: 50px
+    left: 0
+    right: 0
+</style>
+
