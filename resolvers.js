@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt-nodejs');
+
 module.exports = {
   Query: {
     getPosts: async (_, args, { Post }) => {
@@ -32,6 +34,26 @@ module.exports = {
       }).save();
 
       return newPost;
+    },
+    signinUser: async (_, { username, password }, { User }) => {
+      const user = await User.findOne({ username });
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      const isValidPassword = await new Promise((resolve, reject) => {
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (err) reject(err);
+
+          resolve(res);
+        });
+      });
+
+      if (!isValidPassword) {
+        throw new Error('Invalid password');
+      }
+
+      return user;
     },
     signupUser: async (_, { username, email, password }, { User }) => {
       // { User } - mongoose User model from context object
