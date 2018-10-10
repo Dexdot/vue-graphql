@@ -1,7 +1,19 @@
 <template>
   <div>
+
+    <v-layout row>
+      <v-dialog v-model="loading" persistent fullscreen>
+        <v-container fill-height>
+          <v-layout row justify-center align-center>
+            <v-progress-circular indeterminate :size="70" :width="7" color="primary">
+            </v-progress-circular>
+          </v-layout>
+        </v-container>
+      </v-dialog>
+    </v-layout>
+
     <v-flex xs12 text-xs-center>
-      <v-carousel v-if="posts.length" v-bind="{ 'cycle': true }" interval="3000">
+      <v-carousel v-if="!loading && posts.length" v-bind="{ 'cycle': true }" interval="3000">
         <v-carousel-item v-for="post in posts" :key="post._id" :src="post.imageUrl">
           <h1 class="carousel__title"> {{ post.title }} </h1>
         </v-carousel-item>
@@ -12,7 +24,7 @@
 
 
 <script>
-import { gql } from 'apollo-boost';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
@@ -25,35 +37,8 @@ export default {
     this.handleGetCarouselPosts();
   },
   computed: {
-    posts() {
-      return this.$store.getters.posts;
-    }
+    ...mapGetters(['posts', 'loading'])
   }
-  // apollo: {
-  //   getPosts: {
-  //     query: gql`
-  //       query {
-  //         getPosts {
-  //           _id
-  //           title
-  //           description
-  //           imageUrl
-  //           categories
-  //           createdDate
-  //           likes
-  //           } 
-  //       }
-  //     `,
-  //     result({ data, loading }) {
-  //       if (!loading) {
-  //         this.posts = data.getPosts;
-  //       }
-  //     },
-  //     error(err) {
-  //       console.error(err);
-  //     }
-  //   }
-  // }
 }
 </script>
 
