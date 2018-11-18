@@ -41,7 +41,7 @@ UserSchema.pre('save', function(next) {
   next();
 });
 
-// Hass password so it can not be seen w/ access to DB
+// Hash password so it can not be seen w/ access to DB
 UserSchema.pre('save', function(next) {
   if (!this.isModified('password')) {
     return next();

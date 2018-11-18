@@ -10,8 +10,6 @@ const resolvers = require('./resolvers');
 
 // Import Environment Variables and Mongoose models
 require('dotenv').config({ path: 'variables.env' });
-
-// Mongoose schemas
 const User = require('./models/User');
 const Post = require('./models/Post');
 
